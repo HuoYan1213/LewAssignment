@@ -1,0 +1,225 @@
+body {
+    background: linear-gradient(to bottom right, #f8f0ee, #fdf6f3);
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    color: #532323;
+    margin: 0;
+    padding: 30px;
+}
+
+.header {
+    background-color: #dbaaaa;
+    padding: 20px 30px; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: rgb(131,31,31);
+    border-radius: 16px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 12px rgba(131,31,31,0.2);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 36px;
+    font-weight: bold; 
+}
+
+.home-btn {
+    background-color: white;
+    color: rgb(131,31,31);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    box-shadow: 0 4px 8px rgba(131,31,31,0.15);
+}
+
+.home-btn:hover {
+    background-color: #f4d6d6;
+    color: #8f2222;
+    transform: translateY(-2px);
+}
+
+.home-btn:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(131, 31, 31, 0.3);
+}
+
+.menu-title {
+    color: rgb(131,31,31);
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.menu-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #9e2a2a;
+    margin: 8px auto 0;
+    border-radius: 2px;
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.item-row {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #e2b4b4;
+    border-radius: 16px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 300px;
+}
+
+.item-image img {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.item-text {
+    flex-grow: 1;
+}
+
+.item-text h3 {
+    margin: 5px 0;
+    font-size: 20px;
+}
+
+.item-text p {
+    margin: 4px 0;
+    font-size: 15px;
+}
+
+.label {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.label.halal, .label.Halal {
+    background-color: #58b368;
+}
+
+.label.non-halal, .label.Non-Halal {
+    background-color: #d9534f;
+}
+
+.small-btn {
+    background: linear-gradient(135deg, #9e2a2a, #83201f);
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease;
+}
+
+.small-btn:hover {
+    background: linear-gradient(135deg, #83201f, #701a1a);
+}
+
+.quantity-input {
+    margin: 10px 0;
+    width: 50px;
+    padding: 5px;
+}
+
+.categories {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+}
+
+.category-btn {
+    padding: 12px 25px;
+    background-color: #9e2a2a;  /* 让按钮颜色更和谐 */
+    color: white;
+    border: none;
+    border-radius: 20px;  /* 增加更圆润的边角 */
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(131,31,31,0.2);
+    transition: all 0.3s ease;  /* 使按钮变得更平滑 */
+    margin-right: 15px;  /* 增加按钮之间的间距 */
+    margin-bottom: 10px;  /* 增加底部间距 */
+    display: inline-block;
+}
+
+.category-btn:hover {
+    background-color: #83201f;  /* 悬停效果更显眼 */
+    transform: translateY(-3px);  /* 添加浮动效果 */
+    box-shadow: 0 6px 15px rgba(131,31,31,0.3);  /* 加强悬停时的阴影 */
+}
+
+.category-btn:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(143, 34, 34, 0.4);  /* 聚焦效果 */
+}
+
+.category-btn:active {
+    transform: translateY(1px);  /* 按钮被点击时的小反馈效果 */
+}
+
+
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.quantity-control button {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #9e2a2a;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease;
+}
+
+.quantity-control button:hover {
+    background-color: #83201f;
+}
+
+.out-of-stock {
+    display: inline-block;
+    background-color: #ccc;
+    color: #fff;
+    padding: 4px 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    margin-top: 8px;
+    font-weight: bold;
+  }
+  

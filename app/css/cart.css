@@ -1,0 +1,251 @@
+/* --- General Styles --- */
+body {
+    background: linear-gradient(to bottom right, #f8f0ee, #fdf6f3);
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    color: #532323;
+    margin: 0;
+    padding: 30px;
+}
+
+.container, .checkout-container, .confirmation-container {
+    max-width: 960px;
+    margin: auto;
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 8px 24px rgba(131,31,31,0.1);
+}
+
+/* --- Header Styles --- */
+.header {
+    background-color: #dbaaaa;
+    padding: 16px 24px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #831f1f;
+    margin-bottom: 30px;
+    box-shadow: 0 6px 20px rgba(131,31,31,0.15);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.back-btn {
+    background-color: white;
+    color: #831f1f;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(131,31,31,0.15);
+}
+
+.back-btn:hover {
+    background-color: #f4d6d6;
+    color: #8f2222;
+}
+
+/* --- Cart / Checkout Styles --- */
+.cart-page, .checkout-container, .confirmation-container {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 30px;
+    background: #fff8f3;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(131,31,31,0.08);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.cart-page h2, .thank-you {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    border-bottom: 2px dashed #dbaaaa;
+    padding-bottom: 10px;
+    color: #831f1f;
+}
+
+.cart-page table, .checkout-container table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    font-size: 16px;
+    border-top: 2px dashed #dbaaaa;
+    border-bottom: 2px dashed #dbaaaa;
+}
+
+.cart-page th, .cart-page td, .checkout-container th, .checkout-container td {
+    padding: 10px 8px;
+    text-align: left;
+    border-bottom: 1px dashed #ebd5d5;
+}
+
+.cart-page th, .checkout-title {
+    background-color: transparent;
+    color: #532323;
+    font-weight: bold;
+}
+
+.cart-page td img, .checkout-container td img {
+    width: 60px;
+    height: 60px;
+    margin-right: 8px;
+    object-fit: cover;
+}
+
+.cart-page td input, .checkout-container td input {
+    width: 40px;
+    height: 30px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.cart-page td a, .remove-btn {
+    color: #8f2222;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* --- Buttons --- */
+.checkout-btn, .btn, .back-btn {
+    background-color: #831f1f;
+    color: white;
+    padding: 12px 36px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(131,31,31,0.2);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.checkout-btn:hover, .btn:hover, .back-btn:hover {
+    background-color: #8f2222;
+    transform: translateY(-2px);
+}
+
+/* --- Summary / Confirmation Page Styles --- */
+.confirmation-container {
+    background-color: #fff8f3;
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 6px 16px rgba(131, 31, 31, 0.15);
+    border: 2px solid #e2b4b4;
+    text-align: center;
+}
+
+.pickup-info {
+    font-size: 18px;
+    margin-bottom: 25px;
+    color: #532323;
+}
+
+.restaurant-logo {
+    display: block;
+    margin: 0 auto 25px;
+    width: 120px;
+    text-align: center;
+}
+
+.logo {
+    text-align: center;
+    display: inline-block;
+    padding: 10px 30px;
+    border: 2px solid #831f1f;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    color: #831f1f;
+    font-weight: bold;
+}
+
+.item-row, .total-row, .checkout-summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 16px;
+    color: #532323;
+}
+
+.total-label, .checkout-total {
+    font-weight: bold;
+}
+
+.checkout-total {
+    font-size: 18px;
+    font-weight: bold;
+    color: #8f2222;
+    text-align: right;
+}
+
+.total-price {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
+}
+
+
+.final-total {
+    font-size: 20px;
+    font-weight: bold;
+    color: #8f2222;
+}
+
+/* --- Payment Method Styles --- */
+.payment-method {
+    text-align: center;
+    margin-top: 20px;
+    padding: 12px;
+    background-color: #fff0ec;
+    border-radius: 10px;
+    font-style: italic;
+    color: #532323;
+    font-size: 16px;
+}
+
+/* --- Responsive Styles --- */
+@media only screen and (max-width: 768px) {
+    .checkout-container {
+        flex-direction: column;
+    }
+
+    .checkout-container table, .cart-page table {
+        font-size: 14px;
+    }
+
+    .thank-you {
+        font-size: 24px;
+    }
+
+    .pickup-info {
+        font-size: 16px;
+    }
+
+    .restaurant-logo {
+        width: 100px;
+    }
+}
+
+.price-align {
+    text-align: right;
+    font-weight: bold;
+    color: #8f2222;
+}
+
+
