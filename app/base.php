@@ -289,7 +289,10 @@ function get_mail() {
 // ============================================================================
 
 // Global PDO object
-$_db = new PDO('mysql:dbname=food', 'root', '', [
+$_db = new PDO(
+    'mysql:host=lew-database.cpzci86ylipl.us-east-1.rds.amazonaws.com;dbname=LewDB', 
+    'admin', 
+    '12345678', [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
 ]);
 
