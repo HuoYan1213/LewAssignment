@@ -35,27 +35,37 @@ if (!$cart_items || !isset($cart_items['items']) || count($cart_items['items']) 
 // ---------------------------------------------
 // Calculate totals
 // ---------------------------------------------
+// Security: Recalculate total using database prices to prevent tampering
 $total_amount = 0;
-foreach ($cart_items['items'] as $item) {
+$stmt_price = $_db->prepare("SELECT price, product_name FROM product WHERE product_id = ?");
+
+foreach ($cart_items['items'] as &$item) {
+    $stmt_price->execute([$item['id']]);
+    $prod = $stmt_price->fetch();
+    if (!$prod) die("Product not found: " . htmlspecialchars($item['id']));
+    
+    // Overwrite the price from client with real DB price
+    $item['price'] = $prod->price;
+    
     $total_amount += $item['price'] * $item['quantity'];
 }
+unset($item); // Break reference
+
 $packaging = 3.00;
 $tax = $total_amount * 0.06;
 $total_amount += $packaging + $tax;
-
-// ---------------------------------------------
-// Generate new order_id like O0007
-// ---------------------------------------------
-$stmt = $_db->query("SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1");
-$last_order = $stmt->fetch(PDO::FETCH_ASSOC);
-$lastId = $last_order ? intval(substr($last_order['order_id'], 1)) : 0;
-$order_id = 'O' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
 
 // ---------------------------------------------
 // Insert order & order items
 // ---------------------------------------------
 try {
     $_db->beginTransaction();
+
+    // Generate new order_id inside transaction to prevent race conditions
+    $stmt = $_db->query("SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1");
+    $last_order = $stmt->fetch(PDO::FETCH_ASSOC);
+    $lastId = $last_order ? intval(substr($last_order['order_id'], 1)) : 0;
+    $order_id = 'O' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
 
     // Insert into orders (without delivery_address, latitude, longitude)
     $stmt = $_db->prepare("
@@ -89,6 +99,11 @@ try {
 
         $stmt_item->execute([$order_item_id, $order_id, $item['id'], $item['quantity'], $item['price'], $subtotal]);
         $stmt_stock->execute([$item['quantity'], $item['id'], $item['quantity']]);
+
+        // Check if stock was actually deducted
+        if ($stmt_stock->rowCount() === 0) {
+            throw new Exception("Insufficient stock for product: " . $item['name']);
+        }
 
         $counter++;
     }
