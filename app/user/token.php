@@ -4,12 +4,12 @@ include '../base.php';
 // ----------------------------------------------------------------------------
 
 // TODO: (1) Delete expired tokens
-$_db->query('DELETE FROM token WHERE expire < NOW()');
+$_db->query('DELETE FROM token WHERE expiry_time < NOW()');
 
 $id = req('id');
 
 // TODO: (2) Is token id valid?
-if (!is_exists($id, 'token', 'id')) {
+if (!is_exists($id, 'token', 'token_id')) {
     temp('info', 'Invalid token. Try again');
     redirect('../login.php');
 }
@@ -41,13 +41,13 @@ if (is_post()) {
     if (!$_err) {
         // TODO: Update user (password) based on token id + delete token
         $stm = $_db->prepare('
-            UPDATE user
-            SET password = SHA1(?)
-            WHERE id = (SELECT user_id FROM token WHERE id = ?);
+            UPDATE users
+            SET password = ?
+            WHERE user_id = (SELECT user_id FROM token WHERE token_id = ?);
 
-            DELETE FROM token WHERE id = ?;
+            DELETE FROM token WHERE token_id = ?;
         ');
-        $stm->execute([$password, $id, $id]);
+        $stm->execute([password_hash($password, PASSWORD_DEFAULT), $id, $id]);
 
         temp('info', 'Record updated');
         redirect('../login.php');
@@ -76,4 +76,3 @@ include '../head.php';
         <button type="reset">Reset</button>
     </section>
 </form>
-

@@ -83,7 +83,7 @@ function save_photo($f, $folder, $width = 200, $height = 200, $user_id = null) {
     $img = new SimpleImage();
     $img->fromFile($f->tmp_name)
         ->thumbnail($width, $height)
-        ->toFile("$folder/$photo", 'image/jpeg');
+        ->toFile("$folder/$photo", 'image/png');
 
     return $photo;
 }
@@ -315,4 +315,3 @@ function is_exists($value, $table, $field) {
 // ============================================================================
 // Global Constants and Variables
 // ============================================================================
-

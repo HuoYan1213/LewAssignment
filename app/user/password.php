@@ -18,9 +18,11 @@ if (is_post()) {
         $_err['password'] = 'Between 5-100 characters';
     } else {
         // Check current password against DB
-        $stm = $_db->prepare('SELECT COUNT(*) FROM users WHERE password = SHA1(?) AND user_id = ?');
-        $stm->execute([$password, $_SESSION['user']->user_id]);
-        if ($stm->fetchColumn() == 0) {
+        $stm = $_db->prepare('SELECT password FROM users WHERE user_id = ?');
+        $stm->execute([$_SESSION['user']->user_id]);
+        $u = $stm->fetch(PDO::FETCH_OBJ);
+
+        if (!$u || !password_verify($password, $u->password)) {
             $_err['password'] = 'Not matched';
         }
     }
@@ -41,8 +43,8 @@ if (is_post()) {
 
     // DB operation: update password
     if (!$_err) {
-        $stm = $_db->prepare('UPDATE users SET password = SHA1(?) WHERE user_id = ?');
-        $stm->execute([$new_password, $_SESSION['user']->user_id]);
+        $stm = $_db->prepare('UPDATE users SET password = ? WHERE user_id = ?');
+        $stm->execute([password_hash($new_password, PASSWORD_DEFAULT), $_SESSION['user']->user_id]);
 
         temp('info', 'Password updated successfully');
         redirect('../main.php');

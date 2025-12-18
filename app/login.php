@@ -1,5 +1,4 @@
 <?php
-session_start();
 include 'base.php';
 
 // ----------------------------------------------------------------------------
@@ -33,13 +32,8 @@ if (is_post()) {
         $u = $stm->fetch(PDO::FETCH_OBJ);
 
         if ($u && password_verify($password, $u->password)) {
-            // Login successful
-            $_SESSION['user_id'] = $u->user_id; // Save user_id to session
             temp('info', 'Login successfully');
-
-            // Redirect to intended page
-            header("Location: $redirect");
-            exit;
+            login($u, $redirect);
         } else {
             $_err['password'] = 'Email or password not matched';
         }

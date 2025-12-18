@@ -1,4 +1,7 @@
-<?php require '_head.php'; ?>
+<?php
+require '../base.php';
+require '_head.php';
+?>
 
 <div class="product-container">
   <div class="search-container">
@@ -14,6 +17,7 @@
   </div>
 
   <div class="categories">
+    <button class="category-btn" onclick="filterCategory('all')">All</button>
     <button class="category-btn" onclick="filterCategory('rice')">Rice</button>
     <button class="category-btn" onclick="filterCategory('noodles')">Noodles</button>
     <button class="category-btn" onclick="filterCategory('chicken')">Chicken</button>
@@ -23,12 +27,6 @@
   </div>
 
   <?php
-  try {
-      $_db = new PDO('mysql:dbname=food;host=localhost', 'root', '', [
-          PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-      ]);
-
       $sql = "SELECT * FROM product";
       $params = [];
 
@@ -71,14 +69,21 @@
               </div>
           </div>";
       }
-  } catch (PDOException $e) {
-      echo "Connection failed: " . $e->getMessage();
-  }
   ?>
 </div>
 
 <script src="../Cart/cart.js"></script>
 <script>
+function filterCategory(category) {
+    const items = document.querySelectorAll('.item-row');
+    items.forEach(item => {
+        if (category === 'all' || item.classList.contains(category)) {
+            item.style.display = ''; // 恢復預設顯示 (顯示)
+        } else {
+            item.style.display = 'none'; // 隱藏
+        }
+    });
+}
 function addToCart2(id, name, price, stock) {
     const qty = parseInt(document.getElementById('qty-' + id).value);
     if(qty > stock) {
@@ -96,8 +101,6 @@ function decreaseQty(id) {
     const input = document.getElementById('qty-' + id);
     if(parseInt(input.value) > 1) input.value = parseInt(input.value) - 1;
 }
-</script>
-
 </script>
 
 <style>

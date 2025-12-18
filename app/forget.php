@@ -11,14 +11,14 @@ if (is_post()) {
     else if (!is_email($email)) {
         $_err['email'] = 'Invalid email';
     }
-    else if (!is_exists($email, 'user', 'email')) {
+    else if (!is_exists($email, 'users', 'email')) {
         $_err['email'] = 'Not exists';
     }
 
     // Send reset token (if valid)
     if (!$_err) {
         // TODO: (1) Select user
-        $stm = $_db->prepare('SELECT * FROM user WHERE email=?');
+        $stm = $_db->prepare('SELECT * FROM users WHERE email=?');
         $stm->execute([$email]);
         $u = $stm->fetch();
 
@@ -29,25 +29,33 @@ if (is_post()) {
         $stm = $_db->prepare('
             DELETE FROM token WHERE user_id = ?;
 
-            INSERT INTO token (id, expire, user_id)
-            VALUES (?, ADDTIME(NOW(), "00:05"), ?);
+            INSERT INTO token (token_id, expiry_time, user_id)
+            VALUES (?, ADDTIME(NOW(), "00:05:00"), ?);
         ');
-        $stm->execute([$u->id, $id, $u->id]);
+        $stm->execute([$u->user_id, $id, $u->user_id]);
 
         // TODO: (4) Generate token url
-        $url = "http://localhost/ass/app/user/token.php?id=$id"; 
-
+        $scheme = $_SERVER['REQUEST_SCHEME'] ?? 'http';
+        $host = $_SERVER['HTTP_HOST'];
+        $path = dirname($_SERVER['SCRIPT_NAME']); // e.g., /ass/app
+        $url = "$scheme://$host$path/user/token.php?id=$id";
 
         // TODO: (5) Send email
-        $m =get_mail();
-        $m ->addAddress($u->email, $u->name);
-        $m->addEmbeddedImage("user/images_user/$u->photo", 'photo');
+        $m = get_mail();
+        $m->addAddress($u->email, $u->name);
+
+        // 檢查圖片是否存在，避免報錯
+        $img_html = '';
+        $photo_path = "user/images_user/$u->photo";
+        if ($u->photo && file_exists($photo_path)) {
+            $m->addEmbeddedImage($photo_path, 'photo');
+            $img_html = "<img src='cid:photo' style='width: 200px; height: 200px; border: 1px solid #333; object-fit: cover'>";
+        }
+
         $m->isHTML(true);
         $m->Subject = 'Reset Password';
         $m->Body = "
-            <img src='cid:photo'
-                 style='width: 200px; height: 200px;
-                        border: 1px solid #333'>
+            $img_html
             <p>Dear $u->name,<p>
             <h1 style='color: red'>Reset Password</h1>
             <p>

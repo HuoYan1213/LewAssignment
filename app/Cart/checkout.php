@@ -90,13 +90,30 @@ document.addEventListener('DOMContentLoaded', function () {
     let marker = L.marker([4.3333, 101.15], { draggable: true }).addTo(map);
 
     function updateAddress(lat, lon) {
+        document.getElementById('selected-address').value = "Locating...";
+        
         fetch(`geocode.php?lat=${lat}&lon=${lon}`)
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('selected-address').value = data.display_name || '';
-                document.getElementById('address_input').value = data.display_name || '';
-                document.getElementById('latitude_input').value = lat;
-                document.getElementById('longitude_input').value = lon;
+            .then(res => res.text())
+            .then(text => {
+                try {
+                    const data = JSON.parse(text);
+                    if (data.error) {
+                        document.getElementById('selected-address').value = "Error: " + data.error;
+                        console.error(data.error);
+                    } else {
+                        document.getElementById('selected-address').value = data.display_name || '';
+                        document.getElementById('address_input').value = data.display_name || '';
+                        document.getElementById('latitude_input').value = lat;
+                        document.getElementById('longitude_input').value = lon;
+                    }
+                } catch (e) {
+                    console.error("Server Response Error (Not JSON):", text); // 這裡會顯示 PHP 的錯誤訊息
+                    document.getElementById('selected-address').value = "Server Error (Check Console)";
+                }
+            })
+            .catch(err => {
+                document.getElementById('selected-address').value = "Network Error - Please try again";
+                console.error(err);
             });
     }
 

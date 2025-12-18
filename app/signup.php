@@ -66,7 +66,7 @@ if (is_post()) {
     if (!$_err) {
 
         // (1) Save photo
-        $photo = save_photo($f, 'photos');
+        $photo = save_photo($f, 'user/images_user');
 
         // Generate new user_id (U001, U002, etc.)
         $last = $_db->query("SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1")->fetchColumn();
@@ -76,9 +76,9 @@ if (is_post()) {
         // Insert user (member)
         $stm = $_db->prepare('
             INSERT INTO users (user_id, email, password, name, photo, role)
-            VALUES (?, ?, SHA1(?), ?, ?, "member")
+            VALUES (?, ?, ?, ?, ?, "member")
         ');
-        $stm->execute([$user_id, $email, $password, $name, $photo]);
+        $stm->execute([$user_id, $email, password_hash($password, PASSWORD_DEFAULT), $name, $photo]);
 
         temp('info', 'Record inserted');
         redirect('login.php');

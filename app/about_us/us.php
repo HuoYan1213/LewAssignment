@@ -1,4 +1,4 @@
-<?php require "_base.php"; ?>
+<?php require "../base.php"; ?>
 
 <?php include '_head.php'; ?>
 
