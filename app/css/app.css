@@ -583,6 +583,7 @@ label.upload img {
 /*dropdown------------------*/
 .dropdown {
     position: relative;
+    left: -15px;
     display: inline-block;
   }
  

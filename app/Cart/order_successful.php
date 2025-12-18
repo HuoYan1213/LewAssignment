@@ -1,11 +1,10 @@
 <?php
-session_start();
 require '../base.php'; // DB connection
 
 // ---------------------------------------------
 // Check if user is logged in
 // ---------------------------------------------
-$customer_id = $_SESSION['user_id'] ?? null;
+$customer_id = $_user?->user_id;
 if (!$customer_id) {
     die("You must be logged in to place an order.");
 }
