@@ -1,13 +1,13 @@
 <?php
-require '_base.php';
+require '../base.php';
 
 $rating_filter = isset($_GET['rating']) ? (int)$_GET['rating'] : 0;
 
 if ($rating_filter >= 1 && $rating_filter <= 5) {
-  $stm = $_db->prepare('SELECT * FROM feedback WHERE rating = ? ORDER BY id DESC');
+  $stm = $_db->prepare('SELECT * FROM feedback WHERE rating = ? ORDER BY feedback_id DESC');
   $stm->execute([$rating_filter]);
 } else {
-  $stm = $_db->query('SELECT * FROM feedback ORDER BY id DESC');
+  $stm = $_db->query('SELECT * FROM feedback ORDER BY feedback_id DESC');
 }
 
 $feedbacks = $stm->fetchAll();
@@ -105,7 +105,7 @@ $total_feedbacks = count($feedbacks);
       <?php foreach ($feedbacks as $f): ?>
         <div class="feedback-item">
           <div class="feedback-header">
-            <strong>User ID: <?= $f->id ?></strong>
+            <strong>User ID: <?= $f->user_id ?></strong>
             <span class="stars"><?= str_repeat('⭐', (int)$f->rating) ?></span>
           </div>
           <div class="feedback-message">

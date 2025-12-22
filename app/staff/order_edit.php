@@ -1,5 +1,5 @@
 <?php
-require_once '_base.php';
+require_once '../base.php';
 
 $edit_id = $_GET['edit_id'] ?? null;
 $order = null;

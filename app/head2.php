@@ -6,6 +6,12 @@
     <title><?= $_title ?? 'TARUMT Cafeteria Food Ordering System' ?></title>
     <link rel="shortcut icon" href="images/logo1.png">
     <link rel="stylesheet" href="css/app.css">
+    <style>
+        .nav-right .dropdown-content {
+            right: 0;
+            left: auto;
+        }
+    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="js/app.js"></script>
 </head>
@@ -62,4 +68,3 @@
     </nav>
 
     
-

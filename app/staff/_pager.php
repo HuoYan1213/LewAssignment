@@ -48,8 +48,8 @@ class pager {
         global $_db;
 
         // Set limit and page
-        $this->limit = ctype_digit($limit) ? max($limit, 1) : 10;
-        $this->page = ctype_digit($page) ? max($page, 1) : 1;
+        $this->limit = ctype_digit((string)$limit) ? max((int)$limit, 1) : 10;
+        $this->page = ctype_digit((string)$page) ? max((int)$page, 1) : 1;
 
         // Generate count SQL
         $countSQL = preg_replace('/SELECT.+FROM/i', 'SELECT COUNT(*) FROM', $query, 1);

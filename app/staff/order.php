@@ -1,11 +1,11 @@
 <?php
-require '_base.php';
+require '../base.php';
 require '_pager.php';
 
 $order_id = $_GET['order_id'] ?? '';
 $user_id  = $_GET['user_id'] ?? '';
 $status   = $_GET['status'] ?? 'All';
-$page     = $_GET['page'] ?? 1;
+$page     = $_GET['page'] ?? '1';
 $sort_by  = $_GET['sort_by'] ?? 'order_id';
 $sort_order = $_GET['sort_order'] ?? 'ASC';
 
@@ -38,7 +38,7 @@ if ($status !== 'All') {
 
 $sql .= " ORDER BY $sort_by $sort_order";
 
-$pager = new pager($sql, $params, 5, $page);
+$pager = new pager($sql, $params, '5', $page);
 ?>
 
 <?php include '_head.php'; ?>

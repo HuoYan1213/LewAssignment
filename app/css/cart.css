@@ -47,11 +47,6 @@ body {
     box-shadow: 0 4px 10px rgba(131,31,31,0.15);
 }
 
-.back-btn:hover {
-    background-color: #f4d6d6;
-    color: #8f2222;
-}
-
 /* --- Cart / Checkout Styles --- */
 .cart-page, .checkout-container, .confirmation-container {
     max-width: 800px;
@@ -119,7 +114,7 @@ body {
 
 /* --- Buttons --- */
 .checkout-btn, .btn, .back-btn {
-    background-color: #831f1f;
+    background-color: #6e1b1b;
     color: white;
     padding: 12px 36px;
     border: none;
@@ -132,7 +127,7 @@ body {
 }
 
 .checkout-btn:hover, .btn:hover, .back-btn:hover {
-    background-color: #8f2222;
+    background-color: #4e1313;
     transform: translateY(-2px);
 }
 

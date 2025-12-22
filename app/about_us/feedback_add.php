@@ -1,18 +1,27 @@
 <?php
-session_start(); 
-require '_base.php';
+require '../base.php';
+auth(); 
 
 $error = null;
 $success = null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $id = $_SESSION['id'] ?? '';
-  $message = $_POST['message'] ?? '';
-  $rating = $_POST['rating'] ?? '';
+if (is_post()) {
+  $id = $_user->user_id;
+  $message = req('message');
+  $rating = req('rating');
 
   if ($id && $message && $rating) {
-    $stm = $_db->prepare('INSERT INTO feedback (id, message, rating, status) VALUES (?, ?, ?, ?)');
-    $stm->execute([$id, $message, $rating, 'Pending']);
+    // Generate feedback_id manually
+    $max = $_db->query("SELECT MAX(feedback_id) FROM feedback")->fetchColumn();
+    $feedback_id = $max ? (int)$max + 1 : 1;
+
+    // Ensure unique ID (skip existing IDs)
+    while (is_exists($feedback_id, 'feedback', 'feedback_id')) {
+        $feedback_id++;
+    }
+
+    $stm = $_db->prepare('INSERT INTO feedback (feedback_id, user_id, message, rating, status) VALUES (?, ?, ?, ?, ?)');
+    $stm->execute([$feedback_id, $id, $message, $rating, 'Pending']);
     $success = "Thank you for your feedback!";
   } else {
     $error = "Please fill in all fields.";
@@ -27,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Member List</title>
     <link rel="stylesheet" href="../css/aboutUs.css">
 </head>
+<body>
 
 <header class="header">
   <div class="header-left">
@@ -46,6 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <?php if ($success): ?>
     <p class="success_msg"><?= $success ?></p>
+    <script>
+        alert('<?= $success ?>');
+        window.location.href = 'feedback_view.php';
+    </script>
   <?php endif; ?>
 
   <form method="post">

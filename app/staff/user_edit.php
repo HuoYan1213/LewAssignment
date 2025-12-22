@@ -1,5 +1,5 @@
 <?php
-require '_base.php';
+require '../base.php';
 
 $edit_id = $_GET['edit_id'] ?? null;
 $user = null;

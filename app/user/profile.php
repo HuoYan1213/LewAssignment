@@ -55,6 +55,8 @@ if (is_post()) {
         } else if ($f->size > 1 * 1024 * 1024) {
             $_err['photo'] = 'Maximum 1MB';
         }
+    } else if (isset($_FILES['photo']['error']) && $_FILES['photo']['error'] == UPLOAD_ERR_INI_SIZE) {
+        $_err['photo'] = 'File too large (Server limit)';
     }
 
     // DB update
@@ -102,7 +104,7 @@ include 'head_in_user.php';
             <div class="err"><?= err('name') ?></div>
         </div>
         
-        <div class="photo-container">
+        <div class="photo-container" style="display: flex; flex-direction: column; align-items: center;">
             <label for="photo">Photo</label>
             <label class="upload">
                 <?= html_file('photo', 'image/*', 'hidden') ?>

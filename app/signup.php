@@ -53,7 +53,11 @@ if (is_post()) {
 
     // Validate: photo (file)
     if (!$f) {
-        $_err['photo'] = 'Required';
+        if (isset($_FILES['photo']['error']) && $_FILES['photo']['error'] == UPLOAD_ERR_INI_SIZE) {
+            $_err['photo'] = 'File too large (Server limit)';
+        } else {
+            $_err['photo'] = 'Required';
+        }
     }
     else if (!str_starts_with($f->type, 'image/')) {
         $_err['photo'] = 'Must be image';

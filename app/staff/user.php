@@ -1,5 +1,5 @@
 <?php
-require '_base.php';
+require '../base.php';
 require '_pager.php';
 
 // Filters & pagination
