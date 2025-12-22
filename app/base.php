@@ -294,18 +294,21 @@ function get_mail() {
 // ============================================================================
 
 // Global PDO object
-/*$_db = new PDO(
+$_db = new PDO(
     'mysql:host=lew-database.cpzci86ylipl.us-east-1.rds.amazonaws.com;dbname=LewDB', 
     'admin', 
     '12345678', [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-]);*/
+]);
+
+/*
 $_db = new PDO(
     'mysql:host=127.0.0.1;dbname=lewdb', 
     'root', 
     'TKS12345678', [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
 ]);
+*/
 
 // Is unique?
 function is_unique($value, $table, $field) {
